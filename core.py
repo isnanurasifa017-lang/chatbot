@@ -1,126 +1,33 @@
+def get_bot_reply(message: str) -> str:
+    text = message.lower()
 
-import json
-from pathlib import Path
-import difflib
+    if "halo" in text or "hai" in text:
+        return "Halo 👋 Selamat datang di Cookiebite 🍪"
 
-# Lokasi file FAQ
-BASE_DIR = Path(__file__).resolve().parent
-FAQ_FILE = BASE_DIR / "faq_toko.json"
+    elif "jam buka" in text:
+        return "🕘 Kami buka setiap hari pukul 09.00 – 21.00"
 
-# Load data FAQ saat aplikasi dijalankan
-with FAQ_FILE.open("r", encoding="utf-8") as f:
-    FAQS = json.load(f)
+    elif "alamat" in text:
+        return "📍 Jl. Ahmad Yani No.12, Tegal"
 
-def get_bot_reply(user_message: str) -> str:
-    """
-    Fungsi utama untuk menjawab pertanyaan.
-    Dipakai bersama oleh web dan Telegram.
-    """
-    text = (user_message or "").lower()
-
-    # 1. Cek kecocokan dengan daftar FAQ berdasarkan keyword
-    for faq in FAQS:
-        for kw in faq["keywords"]:
-            if kw in text:
-                return faq["answer"]
-
-    # 2. Respon sapaan umum
-    sapaan = ["hallo", "hai", "assalamualaikum", "assalamu'alaikum", "pagi", "siang", "sore", "malam"]
-    if any(s in text for s in sapaan):
+    elif "produk" in text:
         return (
-            "Hallo, selamat datang di cookiesbite 👋\n"
-            "Silakan tanya seputar jam operasional, alamat, cara order, atau produk kami."
+            "🍪 Produk Cookiebite:\n"
+            "- Chocolate Cookies\n"
+            "- Cheese Cookies\n"
+            "- Matcha Cookies"
         )
 
-    # 3. Jawaban default kalau tidak ditemukan
+    elif "cara order" in text or "order" in text:
         return (
-        "Maaf, saya belum memahami pertanyaan tersebut.\n"
-        "Silahkan tanyakan tentang :\n"
-         "- Harga kue\n"
-         "- Jenis kue\n"
-         "- Jam buka toko\n"
-         "atau hubungi WhatsApp 081327337031 ya 😊"
-        "Mohon gunakan bahasan yang sopan!!!"
-        )
-    # 4. MUNGKIN MAKSUD ANDA (Suggestion)
-    semua_keyword = []
-    for faq in FAQS:
-        semua_keyword.extend(faq["keywords"])
-
-    rekomendasi = difflib.get_close_matches(
-        text,
-        semua_keyword,
-        n=3,
-        cutoff=0.4
-    )
-
-    if rekomendasi:
-        hasil = "Mungkin maksud anda:\n"
-        for r in set(rekomendasi):
-            hasil += f"- {r}\n"
-        return hasil.strip()    
-    
-import json
-from pathlib import Path
-import difflib
-
-# Lokasi file FAQ
-BASE_DIR = Path(__file__).resolve().parent
-FAQ_FILE = BASE_DIR / "faq_toko.json"
-
-# Load data FAQ saat aplikasi dijalankan
-with FAQ_FILE.open("r", encoding="utf-8") as f:
-    FAQS = json.load(f)
-
-def get_bot_reply(user_message: str) -> str:
-    """
-    Fungsi utama untuk menjawab pertanyaan.
-    Dipakai bersama oleh web dan Telegram.
-    """
-    text = (user_message or "").lower()
-
-    # 1. Cek kecocokan dengan daftar FAQ berdasarkan keyword
-    for faq in FAQS:
-        for kw in faq["keywords"]:
-            if kw in text:
-                return faq["answer"]
-
-    # 2. Respon sapaan umum
-    sapaan = ["hallo", "hai", "assalamualaikum", "assalamu'alaikum", "pagi", "siang", "sore", "malam"]
-    if any(s in text for s in sapaan):
-        return (
-            "Hallo, selamat datang di cookiesbite 👋\n"
-            "Silakan tanya seputar jam operasional, alamat, cara order, atau produk kami."
+            "🛒 Cara Order:\n"
+            "1. Ketik nama produk\n"
+            "2. Tentukan jumlah\n"
+            "3. Kirim alamat lengkap"
         )
 
-    # 3. Jawaban default kalau tidak ditemukan
+    else:
         return (
-        "Maaf, saya belum memahami pertanyaan tersebut.\n"
-        "Silahkan tanyakan tentang :\n"
-         "- Harga kue\n"
-         "- Jenis kue\n"
-         "- Jam buka toko\n"
-         "atau hubungi WhatsApp 081327337031 ya 😊"
-        "Mohon gunakan bahasan yang sopan!!!"
+            "Maaf 🙏 saya belum paham.\n"
+            "Silakan tanya tentang jam buka, alamat, produk, atau cara order."
         )
-    # 4. MUNGKIN MAKSUD ANDA (Suggestion)
-    semua_keyword = []
-    for faq in FAQS:
-        semua_keyword.extend(faq["keywords"])
-
-    rekomendasi = difflib.get_close_matches(
-        text,
-        semua_keyword,
-        n=3,
-        cutoff=0.4
-    )
-
-    if rekomendasi:
-        hasil = "Mungkin maksud anda:\n"
-        for r in set(rekomendasi):
-            hasil += f"- {r}\n"
-        return hasil.strip()    
-    
-    
-    
-

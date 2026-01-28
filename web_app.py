@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, jsonify
 from core import get_bot_reply
 
@@ -16,6 +15,4 @@ def chat():
     return jsonify({"reply": reply})
 
 if __name__ == "__main__":
-    # debug=True supaya mudah melihat error saat pengembangan
-
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8080)
